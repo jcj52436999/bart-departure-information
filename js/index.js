@@ -38,26 +38,26 @@ var showData = function(response) {
   var departureList = "";
   //testing to see if departures is an array
   var toClass = {}.toString; // (1)
-//  alert( toClass.call( departures) );
-  var isArray = toClass.call(departures );
+  //  alert( toClass.call( departures) );
+  var isArray = toClass.call(departures);
 
 
   //test to see if variable departures is an array.  If it is, step through all destinations.
   if (isArray == "[object Array]") {
     for (var i = 0; i < departures.length; i++) {
- //     console.log("in the loop");
+      //     console.log("in the loop");
       departureList = departureList.concat("Destination:&nbsp", departures[i].destination, "<br>");
       var estimateTime = departures[i].estimate;
-  //    alert(toClass.call(estimateTime));
+      //    alert(toClass.call(estimateTime));
       var estimateArray = toClass.call(estimateTime);
-      if (estimateArray=="[object Array]") {
+      if (estimateArray == "[object Array]") {
 
         for (var y = 0; y < estimateTime.length; y++) {
- //         console.log("estimate for loop" + estimateTime.length);
-//          console.log(estimateTime[y].minutes);
-         // departureList = departureList.concat("&nbsp&nbsp&nbsp", estimate[y].minutes, "&nbsp minutes<br>");
+          //         console.log("estimate for loop" + estimateTime.length);
+          //          console.log(estimateTime[y].minutes);
+          // departureList = departureList.concat("&nbsp&nbsp&nbsp", estimate[y].minutes, "&nbsp minutes<br>");
           departureList = departureList.concat("&nbsp&nbsp&nbsp", estimateTime[y].minutes, "&nbsp minutes<br>");
-//          console.log("done");
+          //          console.log("done");
         }
       } else {
         departureList = departureList.concat("&nbsp&nbsp&nbsp", estimateTime.minutes, "&nbsp minutes<br>");
@@ -66,23 +66,23 @@ var showData = function(response) {
     }
     //else is for stations that only have one destination - not an array
   } else {
-//    console.log("in else");
+    //    console.log("in else");
     departureList = departureList.concat("Destination:&nbsp", departures.destination, "<br>");
     var estimateTime = departures.estimate;
     var estimateArray = toClass.call(estimateTime);
-    if (estimateArray=="[object Array]") {
-//      console.log("estimate length T");
+    if (estimateArray == "[object Array]") {
+      //      console.log("estimate length T");
       for (var y = 0; y < estimateTime.length; y++) {
         departureList = departureList.concat("&nbsp&nbsp&nbsp", estimateTime[y].minutes, "&nbsp minutes<br>");
       }
     } else {
-//            console.log("estimate length null");
+      //            console.log("estimate length null");
       departureList = departureList.concat("&nbsp&nbsp&nbsp", estimateTime.minutes, "&nbsp minutes<br>");
     }
     departureList = departureList.concat("<br>");
   }
-//  console.log("out");
-//  console.log(departureList);
+  //  console.log("out");
+  //  console.log(departureList);
   $("#departureTime").html(departureList);
   $("#datetime").html(response.time);
 }; //showData
@@ -109,7 +109,7 @@ var showStations = function(response) {
 };
 
 var findDepartures = function() {
-    $("#departureTime").html("");
+  $("#departureTime").html("");
   var $select = $("#pick-station");
   var stationAbbr = $(this).val();
   $.get({
@@ -122,8 +122,8 @@ var findDepartures = function() {
     },
     timeout: 20000,
     success: processData
-    // success: processData.setTimeout(logConsoleA,10000)
-    // success: setTimeout(processData, 10000)
+      // success: processData.setTimeout(logConsoleA,10000)
+      // success: setTimeout(processData, 10000)
   });
 };
 
@@ -135,17 +135,17 @@ var logConsoleA = function() {
 
 
 var getStations = function() {
-    $.get({
-      url: "https://api.bart.gov/api/stn.aspx",
-      dataFormat: "xml",
-      data: {
-        cmd: "stns",
-        key: "MW9S-E7SL-26DU-VV8V",
-      },
-      timeout: 20000,
-      success: processStations
+  $.get({
+    url: "https://api.bart.gov/api/stn.aspx",
+    dataFormat: "xml",
+    data: {
+      cmd: "stns",
+      key: "MW9S-E7SL-26DU-VV8V",
+    },
+    timeout: 20000,
+    success: processStations
       // success: setTimeout(processStations, 3000)
-    });
+  });
 };
 
 getStations();
