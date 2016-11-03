@@ -113,14 +113,14 @@ var findDepartures = function() {
   var $select = $("#pick-station");
   var stationAbbr = $(this).val();
   $.get({
-    url: "http://api.bart.gov/api/etd.aspx",
+    url: "https://api.bart.gov/api/etd.aspx",
     dataFormat: "xml",
     data: {
       cmd: "etd",
       orig: stationAbbr,
       key: "MW9S-E7SL-26DU-VV8V"
     },
-    timeout: 10000,
+    timeout: 20000,
     success: processData
     // success: processData.setTimeout(logConsoleA,10000)
     // success: setTimeout(processData, 10000)
@@ -130,18 +130,24 @@ var findDepartures = function() {
 var logConsoleA = function() {
   console.log("A delay");
 
-}
+};
 
-$.get({
-  url: "http://api.bart.gov/api/stn.aspx",
-  dataFormat: "xml",
-  data: {
-    cmd: "stns",
-    key: "MW9S-E7SL-26DU-VV8V",
-  },
-  timeout: 3000,
-  success: processStations
-  // success: setTimeout(processStations, 3000)
-});
+
+
+var getStations = function() {
+    $.get({
+      url: "https://api.bart.gov/api/stn.aspx",
+      dataFormat: "xml",
+      data: {
+        cmd: "stns",
+        key: "MW9S-E7SL-26DU-VV8V",
+      },
+      timeout: 20000,
+      success: processStations
+      // success: setTimeout(processStations, 3000)
+    });
+};
+
+getStations();
 
 $("#pick-station").change(findDepartures);
